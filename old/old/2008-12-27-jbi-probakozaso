@@ -1,0 +1,34 @@
+---
+layout: post
+title: JBI próbákozások
+tags:
+- esb
+- jbi
+- openesb
+- petals
+- servicemix
+status: publish
+type: post
+published: true
+meta:
+  _edit_last: '2'
+---
+Régebben egyszer már volt egy ESB-s/JBI-s korszakom, de most úgy tűnik, hogy a munkám is erre fog kanyarodni a jövőben. Elkezdtem hát nézegetni újra az OpenESB-t és más alternatív JBI implementációkat.
+
+(<strong>Figyelmeztetés</strong>: a következő megjegyzések nem tükrözik az egyes szoftverek minőségét, csupán olvasónapló szerű megjegyzések találkozásokról.)
+
+<a href="https://open-esb.dev.java.net/"><strong>OpenESB</strong></a>: előszőr evvel próbáltam gyorsan képbe kerülni. Ha jól értem GlassfishESB-néven fut kitüntetett és terjesztett változat, és most van belőle RC. Régen volt egy olyan vonulat, hogy command line-ból is futtatható legyen, ennek aktuális változatát nem találtam. Gondolom a következő generációs OSGIre épülő <a href="http://fuji.dev.java.net">változat</a>, majd tudni fogja, és addig már nem nagyon. A Fuji viszont ha jól értem a 2009-es J1-re lesz csak Technology Preview, tehát nem lesz aktuális a kövekező időszakokban.
+
+Nemrég tanuja voltam, ahogy valaki próbál konzolból forgatni egy OpenESB-s alkalmazást (alapból ezt a hozzá kapott NetBeans-szel lehet). Hát a szokásos ANT-os library varázslatok kellettek hozzá, csak a Jar filok egy része ráadásul a NetBeans része volt, és onnan kellett volna előbányászni. A mai világban, amikor a CI már elég alap dolognak számít, azért elvárnám, hogy ne kelljen vért pisálni a konzolos fordításhoz.
+
+Még -1: NetBeans 6.1-et adnak alapból az ESB-hez, mert ahhoz vannak jól meg a pluginek (nem NB hívőknek: 6.5 az aktuális verzió)
+
+<strong><a href="http://servicemix.apache.org">ServiceMix</a></strong>: Apache projekt. Ehhez már nem kell alkalmazás szerver, futtatható konzolból is. A 3-as verziójú család támogatja a JBI szabványt, a 4-es az OSGi-t. A 4.1-es fogja mindkettőt. Tehát egyelőre a 3-asnál maradok.
+
+Elfog a kisördög, és megpróbálom tesztelni a JBI kompatibilitását úgy, hogy az OpenESB-be deployolom a részeit. Sajnos a <em>shared</em> <em>library</em> komponens nem tartalmaz mindent (a ServiceMix classpath-ában benne van a commons-logging, de ez nem várható el minden JBI konténertől), ezért nem futnak a BC-k OpenESB-n. Egy minusz pont. A legegyszerűbb példa alkalmazás szintén nem JBI kompatibilis, mert a jbi.xml leíró nincs rendesen legenerálva: -2.
+
+Ezekel a kellemetlen dolgokat leszámítva nem néz ki rosszul a dolog, van hozzá pl. sok barátságos Maven plugin, és elég részletes dokumentáció.
+
+<a href="http://petals.ow2.org/">PEtALS</a>, ez meg OW2 projekt. Erre jutott még a legkevesebb idő, (=ezzel foglalkozom éppen most) de ez is kedves kis cuccnak tűnik. A komponenesek általában tartalmazzás az összes függőségüket is, simán sikerült depoyolnom az OpenESB-be egyet. Van hozzá webes konzol és onnan is lehet deployolni.
+
+Következő feladat: újra átfutni a JBI speckót. (Illetve utánanézni, hogy mikor lesz már JBI 2.0).

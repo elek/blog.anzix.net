@@ -1,0 +1,28 @@
+---
+title: 'Project of the weekend: rahakott'
+categories:
+- pow
+---
+
+I have never found the right personal finance management application for me. I tried the gnucash, but it wasn't comfortable enough (but
+I can imagine that I did't read enough documentation to learn in.).
+
+My priorities were:
+
+* importing transaction logs from my multiple bank account (mostly csv)
+* classifyng the transactions during the import automatically based on regular expression
+* handle different currencies (automatically convert for the reports based on predefine rate tables)
+
+Now I am created a simple static site generator for personal finance reports. It's enogh to copy the exported csv files to subdirectories, create JSON configurations files,
+and define some pattern to classify the transactions.
+
+Simple demo site is [here](http://blog.anzix.net/rahakott), source is on the [github](https://github.com/elek/rahakott). (Dont' expect too much, still a draft, uploaded only for archivation)
+
+Used libraries:
+
+* Twitter bootsrap (like++)
+* [Datatables] (htp://datatables.net)
+* GJon
+* OpenCsv
+* Freemarker
+
