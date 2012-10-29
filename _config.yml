@@ -26,5 +26,6 @@ author :
 production_url : http://jtechnics.anzix.net
 
 paginate : 30
+exclude : 'old'
 
  
