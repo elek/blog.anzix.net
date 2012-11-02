@@ -2,14 +2,14 @@
 # For more see: https://github.com/mojombo/jekyll/wiki/Permalinks
 permalink: /:categories/:year/:month/:day/:title 
 
-exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md"]
+exclude: [".rvmrc", ".rbenv-version", "README.md", "Rakefile", "changelog.md","old"]
 auto: true
 pygments: true
 
 # Themes are encouraged to use these universal variables 
 # so be sure to set them if your theme uses them.
 #
-title : jtechnics.anzix.net
+title : blog.anzix.net
 tagline: 
 author :
   name : elek
@@ -23,9 +23,8 @@ author :
 # Else if you are pushing to username.github.com, replace with your username.
 # Finally if you are pushing to a GitHub project page, include the project name at the end.
 #
-production_url : http://jtechnics.anzix.net
+production_url : http://blog.anzix.net
 
 paginate : 30
-exclude : 'old'
 
  
