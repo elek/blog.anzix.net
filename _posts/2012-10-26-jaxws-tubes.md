@@ -5,28 +5,28 @@ tags: jaxws, soap, soap handler, tubes, metro
 ---
 
 
-Ha egy adott műveletet minden kimenő és/vagy bejövő web service kérésnél meg kell hívni (pl. authorizáció elvégzéséhez vagy egyéb kontextus függő adatok átadásához) általában a JAXWS szaványban szereplő [SOAPHandler](http://docs.oracle.com/cd/E13222_01/wls/docs103/webserv_adv/handlers.html)-ket szokás ajánani.
-
+Ha egy adott műveletet minden kimenő és/vagy bejövő web service kérésnél meg kell hívni (pl. autorizáció elvégzéséhez vagy egyéb kontextus függő adatok átadásához) általában a JAXWS szabványban szereplő [SOAPHandler](http://docs.oracle.com/cd/E13222_01/wls/docs103/webserv_adv/handlers.html)-eket szokás ajánlani.
 
 A SOAPHandler-eknek azonban több erős korlátja is van:
 
-* Nem lehet transzparensen, automatikusan aktiválni minden webservicre egy adott projekten belül.
-* Bizonyos alacsony szintű (gyártó specifikus) objektumokhoz nem, vagy csak korlátozotton fér hozzá.
+ * Nem lehet transzparensen, automatikusan aktiválni minden webservicre egy adott projekten belül.
 
-Az közül az első sokszor okozoz gondot. Egy autentikációt végző SOAPHandler pl. nem jó, hogy ha attól függ, hogy a fejlesztő definiálta-e, hogy a SOAPHandler-t meg kell hívni az adott webservice-re. A SOAPHandler definiálható annotációval (HandlerChain) vagy XML-ben (sun-jaxws.xml), de mindkét esetben külön kell definiálni minden egyes service-re.
+ * Bizonyos alacsony szintű (gyártó specifikus) objektumokhoz nem, vagy csak korlátozotton fér hozzá.
+
+Ezek közül az első az, ami sokszor gondot tud okozni. Egy autentikációt végző SOAPHandler pl. nem jó, hogy ha attól függ, hogy a fejlesztő definiálta-e, hogy a SOAPHandler-t meg kell hívni az adott webservice-re. A SOAPHandler definiálható annotációval (HandlerChain) vagy XML-ben (sun-jaxws.xml), de mindkét esetben külön kell definiálni minden egyes service-re.
 
 Szerencsére van egy sokkal kevésbé ismert gyártó függő (tehát nem szabványos) megoldás a referencia implementációban.
 
 
-Saját TubelineAssembler-t definiálva ugyanis a Metro feldolgozási sorába regisztrálhatunk új elemeket (és távolíthatunk el meglévőket), amik __minden__ bejövő és/vagy kimenő hívásra le tudnak futni. Az alapok jól össze vannak foglalva [ebben](http://marek.potociar.net/2009/10/19/custom-metro-tube-interceptor/) a cikkben, de ez még egy korábbi JAXWS verziót használ. Metro/JAXWS 2.1-től XML file helyett [Service Provider Interface][spi] használatával kell regisztrálnunk a saját implemetációnkat.
+Saját TubelineAssembler-t definiálva ugyanis a Metro feldolgozási sorába regisztrálhatunk új elemeket (és távolíthatunk el meglévőket), amik __minden__ bejövő és/vagy kimenő hívásra le tudnak futni. Az alapok jól össze vannak foglalva [ebben](http://marek.potociar.net/2009/10/19/custom-metro-tube-interceptor/) a cikkben, de ez még egy korábbi JAXWS verziót használ. Metro/JAXWS 2.1-től XML file helyett [Service Provider Interface][spi] használatával kell regisztrálnunk a saját implementációnkat.
 
 A megoldás így is elég egyszerű:
 
-(1.) Kell egy file a META-INF/services/com.sun.xml.ws.api.pipe.TubelineAssemblerFactory jarban, aminek a tartalma a mi implmenteációnknak a neve.
+(1.) Kell egy file a META-INF/services/com.sun.xml.ws.api.pipe.TubelineAssemblerFactory jarban, aminek a tartalma a mi implementációnknak a neve.
 
     net.anzix.blog.CustomTubelineAssemblerFactory
 
-(2.) Szükség van magára a Factory implementációra, ami legtöbb esetben egyszerűen létrehoyya a TubelineAssembler-t.
+(2.) Szükség van magára a Factory implementációra, ami legtöbb esetben egyszerűen létrehozza a TubelineAssembler-t.
 
 {% highlight java %}
 public class CustomTubelineAssemblerFactory extends TubelineAssemblerFactory {
@@ -37,10 +37,8 @@ public class CustomTubelineAssemblerFactory extends TubelineAssemblerFactory {
     }
 
 {% endhighlight %}
----
 
-(3.) Sajnos az XML definícióhoz hasonlóan a TubelineAssembler-ünkben is definiálnunk kell az összes lépést, tehát le kell másolnunk az aktuális Metro verió alapértelmezett implementációját. (verziófüggőség)
-
+(3.) Sajnos az XML definícióhoz hasonlóan a TubelineAssembler-ünkben is definiálnunk kell az összes lépést, tehát le kell másolnunk az aktuális Metro verzió alapértelmezett implementációját. (verziófüggőség)
 
 {% highlight java %}
 public class CustomTubelineAssembler implements TubelineAssembler {
@@ -106,7 +104,7 @@ public class ServerSideTube extends AbstractFilterTubeImpl {
 
 Kliens oldalra hasonló osztály gyártható. Látszik, hogy SOAPHandler helyett Packet objektumot kapunk, amiből elérhető a SOAPMessage, de pl. az *enpointAdress* address. 
 
-A Packet objektum az eredeti feldogozatlan szöveges request-et is tartalmazza. Egy lehetséges buktató, ha az eredeti JAXWS workflow lépéseket egészítettük ki, hogy ott egy adott ponton ez a szöveg át lesz alakítva feldolgozott SOAPMessage objektummá. Bizonyos stream alapú implementációknál azonban ezt csak egyszer lehet megtenni. Ezért pl. a beépített com.sun.xml.ws.util.pipe.DumpTube (ami a standard output-ra tudja kiírni a kimenő és bemenő üzeneteket) lemásolja az üzenetet mielőtt feldolgozná:
+A Packet objektum az eredeti feldolgozatlan szöveges request-et is tartalmazza. Egy lehetséges buktató, ha az eredeti JAXWS workflow lépéseket egészítettük ki, hogy ott egy adott ponton ez a szöveg át lesz alakítva feldolgozott SOAPMessage objektummá. Bizonyos stream alapú implementációknál azonban ezt csak egyszer lehet megtenni. Ezért pl. a beépített com.sun.xml.ws.util.pipe.DumpTube (ami a standard output-ra tudja kiírni a kimenő és bemenő üzeneteket) lemásolja az üzenetet mielőtt feldolgozná:
 
 {% highlight java %}
 packet.getMessage().copy().writeTo(writer);
