@@ -3,7 +3,7 @@ layout: layout
 title: blog.anzix.net
 ---
 
-<ul class="posts">
+<div class="posts">
   {% for post in paginator.posts %}
   <h1><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h1>
   {{post.content}}
@@ -12,7 +12,7 @@ title: blog.anzix.net
     <a href="{{ BASE_PATH }}{{ post.url }}#disqus_thread">Kommentek...</a>
  </span>
   {% endfor %}
-</ul>
+</div>
 
 
   <nav id="pagination">
