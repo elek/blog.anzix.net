@@ -2,13 +2,13 @@
 title: Github Java projektek
 ---
 
-A github nyilvános API-ján keresztül elérhető adatok mind le vannak [archiválva][gitarchive] és az adatok ráadásul elérhetőek a Google [BigQuery][bigquery] rendszeréből is. Persze a Github nem reprezentálja az összes Open Source projektet, különösen a Java világban nem, ahol az apache.org projektek külön világban élnek, valamint talán annak is van hatása, hogy a JDK a mercurial mellett döntött annó. Ennek ellenére jó szorakozás megnézni, hogy mi a helyzet a Java-val a GitHub-on.
+A github nyilvános API-ján keresztül elérhető adatok mind le vannak [archiválva][gitarchive] és az adatok ráadásul elérhetőek a Google [BigQuery][bigquery] rendszeréből is. Persze a Github nem reprezentálja az összes Open Source projektet, különösen a Java világban nem, ahol az apache.org projektek külön világban élnek, valamint talán annak is van hatása, hogy a JDK a mercurial mellett döntött annó, több projektet ismerek, aki ellenáll a trendnek és mercurialt használ (pl. [bitbucket](http://bitbucket.org)-en) Ennek ellenére jó szorakozás megnézni, hogy mi a helyzet a Java-val a GitHub-on.
 
 A csak kicsit korlátozott [BigQuery SQL dialect][sqldialect]-en kiadott query-kre válaszul rögtön ömlik ránk az adat:
 
 Azoknak a repositoryknak a listája, amiket a legtöbben figyeltek és a Github Java-nak detektálta a legtöbb forrást.
 
-<code language="sql">
+{% highlight sql %}
 select 
    repository_url,repository_description,max(repository_watchers) as repository_watchers
 FROM [githubarchive:github.timeline] 
@@ -18,7 +18,10 @@ where
 group by repository_url,repository_description
 order by repository_watchers desc
 limit 20;
-</code>
+{% endhighlight %}
+
+&nbsp;
+
 
 
 <table class="table table-striped">
@@ -45,9 +48,11 @@ limit 20;
 <tr><td><a href="https://github.com/nostra13/Android-Universal-Image-Loader">Android-Universal-Image-Loader</a></td><td>"Powerful and flexible instrument for asynchronous loading caching and displaying images on Android."</td><td>1540</td></tr>
 </table>
 
-Nagy meglepetés nincsen: a projektek mintegy a fele android specifikus, valamit feltünik jó néhány régi motoros is. (jenkins, netty, elasticsearch, junit). A nokogiri-n kicsit lepődtem csak meg, én is használtam, és tényleg nagyon kézreálló library, de nem gondoltam, hogy main stream. Az arduino meg AVR-es c++-s fejlesztő eszköz, nem feltétlenül Java tool. A CraftBukkit-et se tippeltem volna be látatlanban (minecraft server mod konténer), mégis nagyon előkelő helyen van (a sima Bukkit a 30-adik a listán.)
+Nagy meglepetés nincsen: a projektek mintegy a fele android specifikus, valamit feltünik jó néhány régi motoros is. (jenkins, netty, elasticsearch, junit). A nokogiri-n kicsit lepődtem csak meg, én is használtam, és tényleg nagyon kézreálló library, de nem gondoltam, hogy már mainstream. Az arduino meg AVR-es c++-s fejlesztő eszköz, nem feltétlenül Java tool, de házi bütykölők körében kétségkívül nagyon népszerű. A CraftBukkit-et se tippeltem volna be látatlanban (ez kb egy minecraft server mod konténer), mégis nagyon előkelő helyen van (a sima Bukkit a 30-adik a listán.) 
 
 De ha már kincset vadászunk nézzük meg mi történt év eleje óta (`PARSE_UTC_USEC(repository_created_at) >= PARSE_UTC_USEC('2013-01-01 00:00:00')` a where feltételbe:)
+
+&nbsp;
 
 <table class="table table-stripped">
 <tr><td><a href="repository_url">repository_name</a></td><td>repository_description</td><td>repository_watchers</td></tr>
@@ -73,7 +78,7 @@ De ha már kincset vadászunk nézzük meg mi történt év eleje óta (`PARSE_U
 <tr><td><a href="https://github.com/LarsWerkman/HoloColorPicker">HoloColorPicker</a></td><td>An Android Holo themed colorpicker designed by Marie Schweiz</td><td>198</td></tr>
 </table>
 
-Itt csak az év eleje óta létrehozott projektek vannak, és bár az android dominancia itt is látszik, jóval ismeretlenebb, kalandra csábító felfedezetlen területek.
+Itt csak az év eleje óta létrehozott projektek vannak, és bár az android dominancia itt is látszik, jóval több az ismeretlenebb, kalandra csábító, felfedezetlen terület. (Az előző lista több mint a felét használtam legalább prototípus szinten, és nagy részéről tudtam, itt csak pislogok...) 
 
 Próbáltam emberre lembontva is megnézni, de sajnos csak a pushok-at lehet látni az API-n keresztül, nem pedig a commit-okat, így az automatikusan publikáló és szinkronizáló felhasználók és CI botok nyernek mégha a commitok nevében nem is ők vannak...
 
