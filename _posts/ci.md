@@ -1,0 +1,24 @@
+---
+title: CI töprengések
+layout: post
+date: 2013-05-30 14:18
+tags: CI, deploy, build, travis
+---
+
+Igazából az apropó az volt, hogy megint kezd elfogyni a szerveremen a memória, aminek egyik felelőse a jenkins példányom. Ezért aztán hosszú idő után ismét bekapcsoltam néhány projektre a [Travis CI](https://travis-ci.org)-t. A Travis egy szabadon elérhető build cluster open source projektek számára. A használata szinte már nem is lehetne egyszerűbb. GitHub-os accounttal kell belépni és beállítani a buildelést arra a repo-ra amire akarjuk, ő meg barátságból létrehoz hozzá egy github hookot. Innentől minden pushra buildelni fog egyet, ahogy egy rendes build szervernek kell. Az meg pláne csodálatos, hogy a pull requesteket is [ellenőrzi](http://about.travis-ci.org/blog/announcing-pull-request-support/), és oda kommentálja, ha tetszik neki.
+
+A configurációhoz egy egyszerű yaml file-t kell berakni a projektbe, és ott mondhatjuk meg, hogy mi történjen, milyen környezet kell, stb. Ha valami speciális dolog kell (pl. android környezet), akkor azt első lépésként le kell tölteni, az meg az üzemeltetők gondja, hogy ügyes proxy-kkal védik a sávszélességet.
+
+Ez volt az apropó, de kicsit máshonnan is el lehet indulni. Az a benyomásom, hogy a build, mint olyan, amivel törődni kell, már lassan mindenhol benne van a közgondolkodásban, de valahogy a release és deployok még mindig kicsit mostohán vannak kezelve. Sok projektet láttam már, ahol a build-hez már használtak valami rendes eszközt, de a deloy még mindig kézzel ment és nem automatikusan, a release-nek a technikai része meg szintén, akár több napig is eltartott, mert nem voltak rá bevezevte semmilyen eszközök, stb.
+
+A klasszikus [Joel tesztben](http://www.joelonsoftware.com/articles/fog0000000043.html) egy pontot ér a tizenkettőből, ha igennel tudsz válaszolni a kérdésre, hogy "Can you make a build in one step?". Bár a 12 pontos teszt szerintem abszolút megérdemelten klasszikus, azért én kiterjeszteném ezt a pontot valahogy úgy, hogy akkor jár a pont, ha a release és deploy processzek is egy lépésben indíthatóak és elvégezhetőek.
+
+Az egyik lehetséges út, amin el lehetne indulni, hogy a forráskódba kéne lennie valami file-nak, ami elárulná, hogy hogyan kell deployolni, releaselni, életrekelteni a terméket. A build leírók (ant file, pom.xml, build.gradle) mára már szinte minden projekt forrásban ott van, csak le kell húzni a forrást és mondani neki egy build-et megfelelő eszközzel. De miért nincs ilyen a deploy-ra? 
+
+(Persze tudom, egy tisztességes rendszer elosztottan fut sok helyen, minden környezet függő, stb. de ezek csak a peremfeltételek, nem igazi limitációk. És a nehézségek mellett még számos előnnyel is járna a dolog. Pl. egyszerűen lehetne verziózni a folyamatok konfigurációját. Arról nem is szólva, hogy egyre jobb eszközeink is vannak különböző környezetek kezeléséhez, lásd még [Vagrant](http://www.vagrantup.com/), [Chef](http://www.opscode.com/chef/), [Puppet](https://puppetlabs.com/), stb.)
+
+Jó lenne például, ha lenne olyan jenkins plugin, ami egy job konfigurációját közvetlen a forrásból tudná szedni. Végül is a termék része nem csak az alacsony szintű build felépítése, hanem a magasabb szintű folyamatoké is. Hogy mit jelent nálunk egy teljes build, milyen típusú tesztek, milyen profile-okkal futnak le, vagy hogy hogyan kell működésre bírni a komponenseket és elindítani. Vagy akár be is lehetne rakni mindezt a build file-ba (bár mondjuk a Maven ezen a téren pont nem annyira rugalmas mint pl. a Gradle).
+
+És a végén itt érünk vissza a Travis CI-hez, hiszen ott épp ez történik. A projekt maga tartalmazza a ci konfigurációs file-t, sőt még a titkos adatokat is (pl. szerver jelszó, ahová a kész artifactok feltölthetőek), de ezek a titkos változók asszimmetrikus kulccsal titkosítva vannak, amit csak a build szerver tud felolvasni. Igaz, profile-ok nincsenek, de a koncepció azért kipróbálható.
+
+PS: Ha valakit Open CI szerver érdekel, akkor még ideszúrom, hogy a Cloudbees-tŐl is lehet kapni Jenkins alapú buildelést. Open source projektekre van a [Cloudbees](https://buildhive.cloudbees.com/) (Jenkins alapú, de a beállítások korlátozottak), vagy akár teljes értétű Jenkins példányt is a [Cloudbee](http://cloudbees.com) oldalon keresztül. (1 paralell executor, 300 min az ingyenes keret).
