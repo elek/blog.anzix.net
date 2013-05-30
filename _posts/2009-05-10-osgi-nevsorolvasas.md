@@ -1,7 +1,11 @@
 ---
 layout: post
 title: OSGi névsorolvasás
-tags: []
+tags:
+   - osgi
+   - pax
+   - equinox
+   - felix
 status: publish
 type: post
 published: true
