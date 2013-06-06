@@ -1,6 +1,6 @@
 ---
 layout: layout
-title: blog.anzix.net
+title: Home
 ---
 
 <div class="posts">
@@ -8,10 +8,12 @@ title: blog.anzix.net
   <h1><a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a></h1>
   {{post.content}}
 
-  <span>
-    <a href="{{ BASE_PATH }}{{ post.url }}#disqus_thread">Kommentek...</a>
- </span>
+  <div  style="text-align: right;">
+
+    <a href="{{ BASE_PATH }}{{ post.url }}#disqus_thread" style="margin-right: 2px; margin-left: auto;"><button class="btn btn-info">Kommentek...</button></a >
+ </div>
   {% endfor %}
+
 </div>
 
 

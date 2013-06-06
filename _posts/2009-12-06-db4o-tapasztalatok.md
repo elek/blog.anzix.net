@@ -2,12 +2,7 @@
 layout: post
 title: Db4o tapasztalatok
 tags:
-- db4o
-status: publish
-type: post
-published: true
-meta:
-  _edit_last: '2'
+   - db4o
 ---
 Aktuálisan kedvenc állatorvosi lovam, egy wicket + guice + warp-persistes alkalmazás. Illetve a technológiák gyakran változnak benne, például alig egy órája dobtam ki az utolsó JPA függőséget is belőle, és teljesen átáltam db4o-ra. (A JasperReport helyét is könnyen átveheti a BIRT, illetve a Salve is sorban áll tesztelésre)
 

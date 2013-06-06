@@ -2,12 +2,8 @@
 layout: post
 title: printStackTrace()
 tags:
-- exception
-status: publish
-type: post
-published: true
-meta:
-  _edit_last: '2'
+   - exception
+   - error
 ---
 Régóta tervezem, hogy indítok egy blogot, amiben csak exceptionok vannak. Egy munkahelyi csatorna már van, ahol ilyenekkel bombázom a kolegákat, nem mintha megoldást várnék tőlük, sőt. De úgy gondolom, hogy az exceptionok olyan méltatlanul mellőzőtt ipari képződmények, amik maguk egyszerűségében és monotonitásában valódi művészi értéket hordoznak.
 

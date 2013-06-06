@@ -1,12 +1,9 @@
 ---
 layout: post
 title: Wicket + IoC
-tags: []
-status: publish
-type: post
-published: true
-meta:
-  _edit_last: '2'
+tags:
+   - wicket
+   - guice
 ---
 Ha wicketben elnavigálunk egy statfull oldalról, akkor azt a keretrendszer leserializálja és elrakja. Ha az új oldalról mondjuk a backkel visszamegyünk, akkor az előző oldal példányt vissza serializálja és azt rendereli le. Ha azonban a serializálás közben egy nem serializálható mezőt talála az oldal objektumon, akkor dob egy kivételt (nem a felületen, csak az alkalmazás szerver logjában), és amikor vissza akarunk térni, már csak egy Page Expired oldal fogad.
 
