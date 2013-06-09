@@ -11,8 +11,10 @@ Nemrég találtam egy utolsó mentést róla. Még azért kunyeráltam el Kocká
 
 A Jekyll a statikus blog generálók öregje és zászlóshajója. Lényege, hogy elég egy command line és text file-ok (na meg némi ruby script) egy bloghoz (a text fileok legtöbbször markdown szintakszisban), amiből lehet statikus oldalakat lehet generálni. Alacsony szintű, kódszagú dolog, talán ezért lett viszonylag népszerű geek körökben. (Ezt a blogot is Jekyll generálja egyenlőre). A Github pages [natívan támogatja](https://help.github.com/articles/using-jekyll-with-pages) (pluginek nélkül). 
 
-Csináltam tehát egy [git repót](https://github.com/elek/jhacks/) rengeteg [szöveges file-al](https://github.com/elek/jhacks/tree/gh-pages/wiki), ami remekül [nézegethető](http://elek.github.io/jhacks/) a github pages oldalról. A [migrációs szkriptnek](http://github.com/elek/snipsnap2jekyll) vannak még hibái, de azért elértem egy szintet, ahol már szerintem élvezhető a tartalom.
+Csináltam tehát egy [git repót](https://github.com/elek/jhacks/) rengeteg [szöveges file-al](https://github.com/elek/jhacks/tree/gh-pages/wiki), ami remekül [nézegethető](http://jhacks.anzix.net) a github pages oldalról. A [migrációs szkriptnek](http://github.com/elek/snipsnap2jekyll) vannak még hibái, de azért elértem egy szintet, ahol már szerintem élvezhető a tartalom.
 
 Ha valakit érdekel, milyen volt a java világa kb. 5-8 évvel ezelőtt, bátran lapozgasson bele.
 
 PS: igazából csak read-only archívumot akartam csinálni, hogy ne vesszen el, de beleolvasgatva az oldalakba, egy csomó helyen írtam volna kiegészítést. Egyelőre próbálok ellenállni a kísértésnek, de ha lenne másnak is kedve text file alapú, java wikit szerkesztgetni, engem könnyen be lehetne lelkesíteni...
+
+__UPDATE: Visszaallitottam az egykori domaint:  http://jhacks.anzix.net. A korabban irt url-rol rosszak lesznek a CSS-ek.
