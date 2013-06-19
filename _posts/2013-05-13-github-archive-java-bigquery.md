@@ -8,7 +8,7 @@ A csak kicsit korlátozott [BigQuery SQL dialect][sqldialect]-en kiadott query-k
 
 Azoknak a repositoryknak a listája, amiket a legtöbben figyeltek és a Github Java-nak detektálta a legtöbb forrást.
 
-{% highlight sql %}
+```sql
 select 
    repository_url,repository_description,max(repository_watchers) as repository_watchers
 FROM [githubarchive:github.timeline] 
@@ -18,7 +18,7 @@ where
 group by repository_url,repository_description
 order by repository_watchers desc
 limit 20;
-{% endhighlight %}
+```
 
 &nbsp;
 
