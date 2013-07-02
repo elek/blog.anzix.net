@@ -17,4 +17,4 @@ Ha valakit érdekel, milyen volt a java világa kb. 5-8 évvel ezelőtt, bátran
 
 PS: igazából csak read-only archívumot akartam csinálni, hogy ne vesszen el, de beleolvasgatva az oldalakba, egy csomó helyen írtam volna kiegészítést. Egyelőre próbálok ellenállni a kísértésnek, de ha lenne másnak is kedve text file alapú, java wikit szerkesztgetni, engem könnyen be lehetne lelkesíteni...
 
-__UPDATE: Visszaallitottam az egykori domaint:  http://jhacks.anzix.net. A korabban irt url-rol rosszak lesznek a CSS-ek.
+__UPDATE__: Visszaallitottam az egykori domaint:  http://jhacks.anzix.net. A korabban irt url-rol rosszak lesznek a CSS-ek.
