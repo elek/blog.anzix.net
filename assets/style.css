@@ -81,3 +81,9 @@ h2 {
 	color:#FFF;
 }
 	
+
+code {
+white-space:pre-wrap;;
+word-break:break-all;
+word-wrap:break-word;
+}
