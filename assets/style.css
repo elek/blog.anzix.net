@@ -87,3 +87,10 @@ white-space:pre-wrap;;
 word-break:break-all;
 word-wrap:break-word;
 }
+/** presentations **/
+.presentation img{
+   border: 1px solid #EFEFEF;
+}
+div.presentation {
+   margin-top: 30px;
+}
